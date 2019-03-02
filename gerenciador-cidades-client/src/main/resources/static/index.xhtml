@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head/>
+<h:form id="form" enctype="multipart/form-data">
+	<p:panel id="basic" header="Importação Arquivo Cidades" footer="Importador" style="margin-bottom:20px">
+        <h:panelGrid columns="2" cellpadding="10" title="Arquivo:">
+            <p:outputLabel>Arquivo:</p:outputLabel>
+            <p:fileUpload mode="simple" skinSimple="true" value="#{importacaoInscricaoPlanilhaBean.planilhaImportacao}"
+					 	 auto="true" label="Selecione o arquivo de importação (*.csv)"
+					 	 allowTypes="/(\.|\/)(csv)$/"/>
+			<h:commandLink action="#{importacaoInscricaoPlanilhaBean.processarArquivo}" styleClass="btn-submit" title="Processar" onclick="PF('loading').show();">
+       			<i class="glyphicon glyphicon-floppy-disk"></i> Analisar Arquivo
+       		</h:commandLink>
+			<h:commandLink action="#{consultadorEventoBean.entrarConsulta}" onclick="${confirm}" styleClass="btn-action" immediate="true" title="Cancelar">
+				Cancelar
+			</h:commandLink>
+        </h:panelGrid>
+    </p:panel>
+			 
+	<!-- <br/>
+	<h:panelGroup rendered="#{not empty importacaoInscricaoPlanilhaBean.batchImportacaoPlanilha and not empty importacaoInscricaoPlanilhaBean.batchImportacaoPlanilha.inscricoes}">
+		 <div class="painel painel-formulario" style="width: 85%">
+
+		    <div class="painel painel-listagem">
+		    	<div class="table-responsive">
+					<p:dataTable id="resultadoConsulta" var="dto" value="#{importacaoInscricaoPlanilhaBean.batchImportacaoPlanilha.inscricoes}"
+							emptyMessage="Nenhuma inscrição encontrada!"
+							style="width:100%"
+							tableStyleClass="listagem"
+							rowStyleClass="#{dto.valida ? '' : 'danger'}">
+							
+							<f:facet name="header">
+								Dados para Importação  
+							</f:facet>
+						
+						<p:column style="width: 3%; text-align: center;">
+							 <p:rowToggler  style="color:red;"/>								 
+						 </p:column>
+						 
+						<p:column headerText="Válido" style="width: 5%; text-align: center;">
+							<h:outputText value="#{dto.valida ? 'SIM' : 'NÃO'}" />
+						</p:column>
+
+						<p:column headerText="Nome" style="width: 15%">
+							<h:outputText value="#{not empty dto.dadosInscricao.inscrito.nome ? dto.dadosInscricao.inscrito.nome : '-'}" />
+						</p:column>
+						
+						<p:column headerText="CEP" style="width: 7%" styleClass="coluna-constante">
+							<h:outputText value="#{not empty dto.dadosInscricao.inscrito.cep ? dto.dadosInscricao.inscrito.cep : '-'}" />
+						</p:column>
+						
+						<p:column headerText="Tel. Fixo" style="width: 9%" styleClass="coluna-constante">
+							<h:outputText value="#{not empty dto.dadosInscricao.inscrito.telefone ? dto.dadosInscricao.inscrito.telefone : '-'}" />
+						</p:column>
+						
+						<p:column headerText="Tel. Celular" style="width: 9%" styleClass="coluna-constante">
+							<h:outputText value="#{not empty dto.dadosInscricao.inscrito.celular ? dto.dadosInscricao.inscrito.celular : '-'}" />
+						</p:column>
+						
+						<p:column headerText="Email" style="width: 15%" styleClass="coluna-constante">
+							<h:outputText value="#{not empty dto.dadosInscricao.inscrito.email ? dto.dadosInscricao.inscrito.email : '-'}" />
+						</p:column>
+						
+						<p:column headerText="Primeira Parcela" style="width: 10%" styleClass="coluna-constante">
+							<h:outputText value="#{dto.dadosInscricao.dataPrimeiraParcela}" converter="#{convertData}" />							
+						</p:column>
+						
+						<p:column headerText="Data Parcela Recorrência" style="width: 10%" styleClass="coluna-constante">
+							<h:outputText value="#{dto.dataBaseRecorrrencia}" converter="#{convertData}" />
+						</p:column>
+						
+						<p:column headerText="Valor Parcela" style="width: 10%" styleClass="coluna-valor">
+							<h:outputText value="#{dto.valorParcela}" converter="#{convertMoeda}" />
+						</p:column>
+						
+						<p:column headerText="Nº Parcelas" style="width: 8%" styleClass="coluna-constante">
+							<h:outputText value="#{dto.numeroParcelas}"  />
+						</p:column>
+						
+						<p:column headerText="Categoria" style="width: 10%"  styleClass="coluna-constante">
+							<h:outputText value="#{not empty dto.dadosInscricao.categoria ? dto.dadosInscricao.categoria.descricao : '-'}" />
+						</p:column>
+						
+						<p:rowExpansion>
+							<ul>
+					 			<ui:repeat value="#{dto.mensagens}" var="mensagem">
+					 				<li style="margin-top: 5px">#{mensagem}</li>
+					 			</ui:repeat>
+				 			</ul>	
+				 			<table class="listagem">
+				 				<thead>
+				 					<tr>
+				 						<td class="coluna-data">Parcela</td>
+				 						<td class="coluna-data">Vencimento</td>
+				 						<td class="coluna-valor">Valor (R$)</td>
+				 					</tr>
+				 					
+				 				</thead>
+				 				<tbody>
+				 					<ui:repeat var="mensalidade" value="#{dto.parcelas}" varStatus="status">
+				 					
+				 						<tr>
+				 							<td  class="coluna-data">#{status.index + 1}</td>
+				 							<td class="coluna-data"><h:outputText value="#{mensalidade.data}" converter="#{convertData}" /></td>
+				 							<td class="coluna-valor"><h:outputText value="#{mensalidade.valor}" converter="#{convertMoeda}" /></td>
+				 						</tr>
+				 					</ui:repeat>
+				 				</tbody>
+				 			</table>			 				
+				        </p:rowExpansion>
+						
+						
+							
+					</p:dataTable>
+		    	</div>
+		    </div>
+		    
+		    <div style="width:100%;">	 			
+	        	<div class="painel-rodape">      		
+	        		<h:commandLink action="#{importacaoInscricaoPlanilhaBean.importar}" styleClass="btn-submit" title="Cadastrar" onclick="PF('loading').show();" >
+	        			<i class="glyphicon glyphicon-floppy-disk"></i> Importar
+	        		</h:commandLink>
+    				<h:commandLink action="#{consultadorEventoBean.entrarConsulta}" onclick="${confirm}" styleClass="btn-action" immediate="true" title="Cancelar">
+    					Cancelar
+    				</h:commandLink>	        	
+				</div>
+			</div>		
+		 </div>
+	 </h:panelGroup> -->
+ </h:form>
+ </html>   
