@@ -9,35 +9,59 @@
 	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
 	<link type="text/css" rel="stylesheet" href="/javax.faces.resource/theme.css.jsf?ln=primefaces-bootstrap" />
-	<!-- <link rel="stylesheet" href="/css/bootstrap.css" media="screen" />
-	<link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" />
-	<link rel="stylesheet" href="/css/bootstrap-grid.css" media="screen" />
-	<link rel="stylesheet" href="/css/bootstrap-reboot.css" media="screen" /> -->
-	<!-- <link rel="stylesheet" href="../resources/css/bootstrap.min.css"/>         
-	<script src="../resources/js/bootstrap.min.js"></script>  -->
 	<title>Gerenciador Cidades</title>
 </h:head>
 <h:body>
 <h:form id="form" enctype="multipart/form-data" class="form-horizontal">
-<p:spinner />
+
 	<div class="container p-3 mb-2 bg-dark text-white text-center font-weight-bold">
 		<h3>Gerenciador Cidades</h3>
     </div>
-    
+    <br/>
     <div class="form-group">
-    	<label for="importadorArquivo">Importador</label>
-    	<input type="file" class="form-control-file" id="importadorArquivo" onload=""/>
-    	<p:fileUpload id="importadorArquivo" mode="simple" skinSimple="true" 
-					 	 auto="true" label="Selecione o arquivo de importação (*.csv)"
-					 	 allowTypes="/(\.|\/)(csv)$/"/>
-	</div>					 	 
-		<input type="submit" class="btn btn-primary" value="Analisar Arquivo" title="Analisar Arquivo" onclick=""/>
-
-		<h:commandLink action="#{consultadorEventoBean.entrarConsulta}" onclick="${confirm}" styleClass="btn btn-default" immediate="true" title="Cancelar">
-			Cancelar
-		</h:commandLink>
+	    <div class="cotainer">
+	        <div class="row justify-content-center">
+	            <div class="col-md-4">
+			    	<div class="card">
+						<div class="card-header">
+			    		 	<h5>Importador</h5>
+						</div>
+			    	
+						<div class="card-body">
+							<div class="row justify-content-center">   		
+					    		<input type="file" class="form-control-file" id="importadorArquivo" onload=""/>
+				    		</div>
+							<div class="row justify-content-center" style="margin-top: 2rem"> 
+								<input type="submit" class="btn btn-primary" value="Analisar Arquivo" title="Analisar Arquivo" onclick=""/>
+								<input type="submit" class="btn btn-primary" value="Cancelar" title="Cancelar" style="margin-left: 1rem" onclick="myFunction()"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <br/>
     
-    
+    <!-- <div class="row justify-content-md-center" style="height: 70px">
+			<div class="col-4 bg-light">
+    		 	<h4>Importador</h4>
+			</div>
+			<div class="w-100"></div>
+    	</div>
+		<div class="row justify-content-md-center" style="height: 70px">
+			<div class="col-4">	    		
+	    		<input type="file" class="form-control-file" id="importadorArquivo" onload=""/>
+    		</div>
+    		<div class="w-100"></div>
+ 		</div>
+ 		<div class="row justify-content-md-center">
+			<div class="col-4 bg-light text-center">
+				<input type="submit" class="btn btn-primary" value="Analisar Arquivo" title="Analisar Arquivo" onclick=""/>
+				<input type="submit" class="btn btn-primary" value="Cancelar" title="Cancelar" onclick=""/>
+			</div>
+			<div class="w-100"></div>
+		</div> -->
     <footer class="page-footer font-small bg-dark pt-2">
     	<div class="container-fluid text-center text-white">
     		<h6>Desafio Gerenciador Cidade</h6>
@@ -169,5 +193,11 @@
 		 </div>
 	 </h:panelGroup> -->
  	</h:form>
+ 	
+ 	<script>
+		function myFunction() {
+		  location.reload();
+		}
+	</script>
  </h:body>
  </html>   
